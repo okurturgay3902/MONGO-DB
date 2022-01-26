@@ -1,11 +1,13 @@
 //1) 90'ın üzerinde puan(skor) alan restoranları bulmak için bir MongoDB sorgusu yazın 
 use("ULKELER");
-db.foods.find({"grades.score":{$gt:90}}, {grades:1, _id:0,name:1});
+db.foods.find({"grades.score":{$gt:90}}, {"grades.$":1, _id:0,name:1});
+
+// .$ yazinca istedigimiz veri yi yazdirir digerlerini yazmaz
 
 // ikinci cozum
 
 use("ULKELER");
-db.foods.find({grades : { $elemMatch:{"score":{$gt : 90}}}}, {borough:1,cuisine:1,grades:1,_id:0}  );
+db.foods.find({grades : { $elemMatch:{"score":{$gt : 90}}}}, {borough:1,cuisine:1,"grades.$":1,_id:0}  );
 
 
 //2) 80'den fazla 150'den az puan alan restoranları bulmak için bir MongoDB sorgusu yazın
@@ -16,7 +18,7 @@ db.foods.find({"grades.score":{$gt:80, $lt:150}}, {grades:1, _id:0,name:1});
 // enlem değerine sahip restoranları bulmak için bir MongoDB sorgusu yazın
 use("ULKELER");
 db.foods.find({"cuisine":{$ne:"Amerikan "}, "grades.score":{$gt:70}, "address.coord": {$lt:-65.754168}    },
- {cuisine:1, _id:0, name:1, "address.coord":1, grades:1}).count;
+ {cuisine:1, _id:0, name:1, "address.coord":1, grades:1});
 
 //4) Adının ilk üç harfi 'Wil' olan restoranlar için restoran kimliği, adı, ilçesi ve mutfağını
 // bulmak için bir MongoDB sorgusu yazın.
@@ -80,4 +82,26 @@ use("ULKELER")
 db.foods.find({"grades.score":{$mod:[7,0]}},{restaurant_id:1,name:1, grades:1 ,_id:0 })
 
 
+//ödev
+//coord değeri -95.754168'den küçük olan restoranları bulmak için bir MongoDB sorgusu yazın
 
+//ödev
+//-65.754168 'den küçük boylamda yer alan ve 70'den fazla score alan 'Amerikan' mutfağı (cuisine) hazırlamayan restoranları bulmak için bir MongoDB sorgusu yazın.
+    
+//ödev
+//Herhangi bir 'Amerikan' mutfağı hazırlamayan ve Brooklyn borough a ait olmayan, 'A' score alan restoranları bulmak için bir MongoDB sorgusu yazın. Belge, mutfağa göre azalan sırada görüntülenmelidir. 
+
+//ödev
+//Adının son üç harfi 'ces' olan restoranlar için restoran kimliği, adı, ilçesi ve mutfağını bulmak için bir MongoDB sorgusu yazın
+
+//ödev
+//Bronx borough a ait , Amerikan veya Çin yemeği hazırlayan restoranları bulmak için bir MongoDB sorgusu yazınız
+
+//ödev
+//Puanı 10'dan fazla olmayan restoranların restoran id si, adı, ilçesi ve mutfağını bulmak için bir MongoDB sorgusu yazın.
+
+//ödev
+//Koordinat (coord[]) dizisinin 2. elemanı 42'den fazla ve 52'ye kadar bir değer içeren restoranların restoran id, adı, adresi ve coğrafi konumunu (coords) bulmak için bir MongoDB sorgusu yazın.
+
+//ödev
+//Mutfağın adını artan sırada düzenlemek için bir MongoDB sorgusu yazın ve aynı mutfak için ilçe azalan sırada olmalıdır.
